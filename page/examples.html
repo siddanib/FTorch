@@ -12,14 +12,29 @@
 
     <title>Examples &ndash; FTorch</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="../css/pygments.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
     <link href="../css/local.css" rel="stylesheet">
-      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="../css/pygments.css" rel="stylesheet">
     <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
@@ -93,10 +108,17 @@
           <hr>
           <nav class="nav nav-pills flex-column">
               <a class="nav-link" href="LICENSE.html">FTorch License</a>
+              <a class="nav-link" href="archive.html">News archive</a>
+              <a class="nav-link" href="changelog.html">FTorch Changelog</a>
               <a class="nav-link" href="cmake.html">Installation and Build Process</a>
               <a class="nav-link" href="developer.html">Developer Guide</a>
               <a class="nav-link active disabled" href="examples.html">Examples</a>
               <a class="nav-link" href="gpu.html">GPU Support</a>
+              <a class="nav-link" href="hpc.html">Guidance for use in High Performance Computing (HPC)</a>
+              <a class="nav-link" href="offline.html">Offline training</a>
+              <a class="nav-link" href="online.html">Online training</a>
+              <a class="nav-link" href="presentations.html">Presentations</a>
+              <a class="nav-link" href="tensor.html">Tensor API</a>
               <a class="nav-link" href="testing.html">FTorch test suite</a>
               <a class="nav-link" href="transposing.html">When to transpose data</a>
               <a class="nav-link" href="troubleshooting.html">Troubleshooting</a>
@@ -123,10 +145,14 @@
 </ul>
 </li>
 <li><a href="#worked-examples">Worked examples</a><ul>
-<li><a href="#1-simplenet">1) SimpleNet</a></li>
-<li><a href="#2-resnet">2) Resnet</a></li>
-<li><a href="#3-multigpu">3) MultiGPU</a></li>
+<li><a href="#1-tensor">1) Tensor</a></li>
+<li><a href="#2-simplenet">2) SimpleNet</a></li>
+<li><a href="#3-resnet">3) Resnet</a></li>
 <li><a href="#4-multiio">4) MultiIO</a></li>
+<li><a href="#5-looping">5) Looping</a></li>
+<li><a href="#6-multigpu">6) MultiGPU</a></li>
+<li><a href="#7-mpi">7) MPI</a></li>
+<li><a href="#8-autograd">8) Autograd</a></li>
 </ul>
 </li>
 </ul>
@@ -189,7 +215,7 @@ before writing your own code to fully explore the features.</p>
 <span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">out_layout</span><span class="p">(</span><span class="n">out_dims</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="c">! Initialise the Torch model to be used</span>
-<span class="n">torch_model_load</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/path/to/saved/model.pt&quot;</span><span class="p">)</span>
+<span class="n">torch_model_load</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/path/to/saved/model.pt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">torch_kCPU</span><span class="p">)</span>
 
 <span class="c">! Initialise the inputs as Fortran array of ones</span>
 <span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
@@ -220,7 +246,7 @@ Here we describe how to do this for two build systems, CMake and make.</p>
 <p>If our project were using CMake we would need the following in the <code>CMakeLists.txt</code>
 file to find the FTorch installation and link it to the executable.</p>
 <p>This can be done by adding the following to the <code>CMakeLists.txt</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">find_package</span><span class="p">(</span><span class="s">FTorch</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">find_package</span><span class="p">(</span><span class="s">FTorch</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="w"> </span><span class="s">&lt;executable&gt;</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">FTorch::ftorch</span><span class="w"> </span><span class="p">)</span>
 <span class="nb">message</span><span class="p">(</span><span class="s">STATUS</span><span class="w"> </span><span class="s2">&quot;Building with Fortran PyTorch coupling&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -232,25 +258,10 @@ file to find the FTorch installation and link it to the executable.</p>
 then you should use the same path for <code>&lt;/path/to/install/location&gt;</code>.</em></p>
 </blockquote>
 <h5 id="make">Make</h5>
-<p>To build with make we need to include the library when compiling and link the executable
-against it.</p>
-<p>To compile with make we need add the following compiler flag when compiling files that
-use FTorch:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">FCFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">-</span><span class="nv">I</span><span class="o">&lt;</span><span class="nv">path</span><span class="o">/</span><span class="nv">to</span><span class="o">/</span><span class="nv">install</span><span class="o">/</span><span class="nv">location</span><span class="o">&gt;/</span><span class="k">include</span><span class="o">/</span><span class="nv">ftorch</span>
-</code></pre></div>
-
-<p>When compiling the final executable add the following link flag:</p>
-<div class="codehilite"><pre><span></span><code>LDFLAGS += -L&lt;path/to/install/location&gt;/lib -lftorch
-</code></pre></div>
-
-<p>You may also need to add the location of the <code>.so</code> files to your <code>LD_LIBRARY_PATH</code>
-unless installing in a default location:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">$</span><span class="n">LD_LIBRARY_PATH</span><span class="p">:</span><span class="o">&lt;</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">location</span><span class="o">&gt;/</span><span class="n">lib</span>
-</code></pre></div>
-
-<blockquote>
-<p>Note: <em>Depending on your system and architecture <code>lib</code> may be <code>lib64</code> or something similar.</em></p>
-</blockquote>
+<p>To build with <code>make</code> we need to <em>include</em> the library and <em>link</em> the
+executable against it when compiling.</p>
+<p>For full details of the flags to set and the linking process see the
+<a href="page/hpc.html/#building-projects-and-linking-to-ftorch">HPC build pages</a>.</p>
 <h3 id="running-on-gpus">Running on GPUs</h3>
 <p>In order to run a model on GPU, two main changes to the above process are required:</p>
 <ol>
@@ -265,28 +276,49 @@ unless installing in a default location:</p>
 <p>These are designed to introduce users to FTorch and how to use the various features.</p>
 <p>A subset of the examples are included as integration tests as part of FTorch's
 <a href="testing.html">test suite</a>.</p>
-<h4 id="1-simplenet">1) SimpleNet</h4>
-<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/1_SimpleNet">This worked example</a>
+<h4 id="1-tensor">1) Tensor</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/1_Tensor">This worked example</a>
+provides a simple demonstration of how to create, manipulate,
+interrogate, and destroy instances of the <code>torch_tensor</code> derived type. This is
+one of the core derived types in the FTorch library, providing an interface to
+the <code>torch::Tensor</code> C++ class. Like <code>torch::Tensor</code>, the <code>torch_tensor</code> derived
+type is designed to have a similar API to PyTorch's <code>torch.Tensor</code> class.</p>
+<h4 id="2-simplenet">2) SimpleNet</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/2_SimpleNet">This worked example</a>
 provides a simple but complete demonstration of how to use the library.
 It uses simple PyTorch 'net' that takes an input vector of length 5 and applies a single
 Linear layer to multiply it by 2.
 The aim is to demonstrate the most basic features of coupling before worrying about
 more complex issues that are covered in later examples.</p>
-<h4 id="2-resnet">2) Resnet</h4>
-<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/2_ResNet18">This worked example</a>
+<h4 id="3-resnet">3) Resnet</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/3_ResNet">This worked example</a>
 provides a more realistic demonstration of how to use the library,
 using ResNet-18 to classify an image.
 As the input to this model is four-dimensional (batch size, colour, x, y),
 care must be taken dealing with the data array in Python and Fortran.
 See <a href="transposing.html">when to transpose arrays</a> for more details.</p>
-<h4 id="3-multigpu">3) MultiGPU</h4>
-<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/3_MultiGPU">This worked example</a>
-builds on the SimpleNet demo and shows how to account for the case of sending different
-data to multiple GPU devices.</p>
 <h4 id="4-multiio">4) MultiIO</h4>
 <p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/4_MultiIO">This worked example</a>
 considers a variant of the SimpleNet demo, which demonstrates how to account for
 multiple input tensors and multiple output tensors.</p>
+<h4 id="5-looping">5) Looping</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/5_Looping">This worked example</a>
+demonstrates best practices for performing inference on the same network with
+different input multiple times in the same workflow.</p>
+<h4 id="6-multigpu">6) MultiGPU</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/6_MultiGPU">This worked example</a>
+builds on the SimpleNet demo and shows how to account for the case of sending different
+data to multiple GPU devices.</p>
+<h4 id="7-mpi">7) MPI</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/7_MPI">This worked example</a>
+demonstrates how to run the SimpleNet example in the context of MPI parallelism,
+running the net with different input arrays on each MPI rank.</p>
+<h4 id="8-autograd">8) Autograd</h4>
+<p><a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/8_Autograd">This worked example</a>
+is currently under development. Eventually, it will demonstrate how to perform
+automatic differentiation in FTorch by leveraging PyTorch's Autograd module.
+Currently, it just demonstrates how to compute mathematical expressions
+involving Torch tensors.</p>
     </div>
   </div>
       <hr>
@@ -297,7 +329,7 @@ multiple input tensors and multiple output tensors.</p>
           <div class="col">
             <p>
               FTorch
- was developed by ICCS Cambridge<br>              &copy; 2024 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+ was developed by ICCS Cambridge<br>              &copy; 2025 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
 </p>
           </div>
           <div class="col">
@@ -310,27 +342,5 @@ multiple input tensors and multiple output tensors.</p>
         <br>
       </div> <!-- /container -->
     </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
-
-    <!-- MathJax JavaScript
-             ================================================== -->
-             <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-          });
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-          <script src="../tipuesearch/tipuesearch_content.js"></script>
-          <script src="../tipuesearch/tipuesearch_set.js"></script>
-          <script src="../tipuesearch/tipuesearch.js"></script>
-
   </body>
 </html>

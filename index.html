@@ -12,14 +12,29 @@
 
     <title> FTorch </title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="./css/pygments.css" rel="stylesheet">
-    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="./css/fontawesome.min.css" rel="stylesheet">
+    <link href="./css/brands.min.css" rel="stylesheet">
+    <link href="./css/regular.min.css" rel="stylesheet">
+    <link href="./css/solid.min.css" rel="stylesheet">
+    <link href="./css/v4-font-face.min.css" rel="stylesheet">
+    <link href="./css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
     <link href="./css/local.css" rel="stylesheet">
-      <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="./css/pygments.css" rel="stylesheet">
     <script src="./js/svg-pan-zoom.min.js"></script>
   </head>
 
@@ -82,7 +97,10 @@
 <div class="toc">
 <ul>
 <li><a href="#brief-description">Brief description</a></li>
-<li><a href="#presentations">Presentations</a></li>
+<li><a href="#citing-ftorch">Citing FTorch</a></li>
+<li><a href="#news">News</a></li>
+<li><a href="#ftorch-training">FTorch training</a></li>
+<li><a href="#select-presentations">Select Presentations</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#projects-using-ftorch">Projects using FTorch</a></li>
 </ul>
@@ -91,20 +109,56 @@
 <p>It is desirable to be able to run machine learning (ML) models directly in Fortran.
 ML models are often trained in some other language (say, Python) using a popular frameworks (say, PyTorch) and saved.
 We want to run inference on this model without having to call a Python executable.
-To achieve this we use the existing Torch C++ interface, libtorch.</p>
+To achieve this we use the existing Torch C++ interface, LibTorch.</p>
 <p>FTorch provides a library enabling a user to directly couple their PyTorch models to Fortran code.
 There are also installation instructions for the library and examples of performing coupling.</p>
 <p>We support running on both CPU and GPU, and have tested the library on UNIX and Windows based operating systems</p>
-<h2 id="presentations">Presentations</h2>
+<h2 id="citing-ftorch">Citing FTorch</h2>
+<p>FTorch is published in JOSS. To cite it in your work please refer to:</p>
+<p>Atkinson et al., (2025). FTorch: a library for coupling PyTorch models to Fortran.
+<em>Journal of Open Source Software</em>, 10(107), 7602, <a href="https://doi.org/10.21105/joss.07602">https://doi.org/10.21105/joss.07602</a></p>
+<h2 id="news">News</h2>
+<p>Some recent updates about FTorch:</p>
+<ul>
+<li>FTorch developers Jack Atkinson and Joe Wallwork
+  <a href="https://science.ai.cam.ac.uk/news/2024-12-09-exploring-novel-applications-of-ai-for-research-and-innovation-%E2%80%93-announcing-our-2024-funded-projects.html">were recently awarded funding from C2D3-Accelerate</a>
+  for a project entitled <em>Online training of large-scale Fortran-based hybrid
+  computational science models, with applications in climate science</em>. This
+  grant will support development for online training functionality for FTorch,
+  as well as research visits, FTorch training tutorials, and organisation of a
+  <a href="https://cambridge-iccs.github.io/ml-coupling-workshop">workshop on hybrid modelling</a>.</li>
+<li>FTorch developer Jack Atkinson will be presenting FTorch in a SciML seminar at
+  <a href="https://www.cemac.leeds.ac.uk/">CEMAC</a> in Leeds on 18th July 2025.</li>
+</ul>
+<h2 id="ftorch-training">FTorch training</h2>
+<p>We offer training on FTorch in the form of tutorials and workshops. The
+companion repository
+<a href="https://github.com/Cambridge-ICCS/FTorch-workshop">https://github.com/Cambridge-ICCS/FTorch-workshop</a>
+provides a set of exercises and solutions to help users get started with FTorch.</p>
+<!--Details of upcoming in-person training events are as follows:-->
+
+<h2 id="select-presentations">Select Presentations</h2>
 <p>The following presentations contain information about FTorch:</p>
 <ul>
-<li>Reducing the overheads for coupling PyTorch machine learning models to Fortran<br>
-  ML &amp; DL Seminars, LSCE, IPSL, Paris - November 2023<br>
-  <a href="https://jackatkinson.net/slides/IPSL_FTorch">Slides</a> - <a href="https://www.youtube.com/watch?v=-NJGuV6Rz6U">Recording</a></li>
-<li>Reducing the Overhead of Coupled Machine Learning Models between Python and Fortran<br>
-  RSECon23, Swansea - September 2023<br>
-  <a href="https://jackatkinson.net/slides/RSECon23">Slides</a> - <a href="https://www.youtube.com/watch?v=Ei6H_BoQ7g4&amp;list=PL27mQJy8eDHmibt_aL3M68x-4gnXpxvZP&amp;index=33">Recording</a></li>
+<li>FTorch: Facilitating Hybrid Modelling<br>
+  N8-CIR Seminar, Leeds - July 2025<br>
+  <a href="https://jackatkinson.net/slides/Leeds-N8-FTorch">Slides</a> - <a href="https://www.youtube.com/watch?v=je7St0t_W9A">Recording</a></li>
+<li>Facilitating machine learning in Fortran using FTorch<br>
+  Seminars at the University of Reading
+  <a href="https://research.reading.ac.uk/met-darc/news-and-events/darc-seminar-series/">Data Assimilation Research Centre</a>
+  and <a href="https://www.ecmwf.int/en/about/location/ecmwf-reading">ECMWF, Reading</a> -
+  May 2025<br>
+  <a href="https://hackmd.io/@jwallwork/darc-seminar-2025?type=slide">Slides</a></li>
+<li>FTorch: Enabling Online Training for Large-Scale Fortran Models<br>
+  <a href="https://polarnetwork.org/events/ccfcs-polar-symposium-2025/">CCfCS Polar Symposium 2025</a>,
+  British Antarctic Survey, Cambridge - May 2025<br>
+  <a href="https://niccolozanotti.com/CCfCS-PolarSymposium25/poster.pdf">Poster</a><br></li>
+<li>Coupling Machine Learning to Numerical (Climate) Models<br>
+  Platform for Advanced Scientific Computing, Zurich - June 2024<br>
+  <a href="https://jackatkinson.net/slides/PASC24">Slides</a></li>
 </ul>
+<p>See the <a href="page/presentations.html">presentations</a> page for a full list of
+presentations on FTorch.</p>
 <h2 id="license">License</h2>
 <p>The FTorch source code, related files and documentation are
 distributed under an <a href="page/LICENSE.html">MIT License which can be viewed here</a>.</p>
@@ -112,19 +166,22 @@ distributed under an <a href="page/LICENSE.html">MIT License which can be viewed
 <p>The following projects make use of FTorch.<br>
 If you use our library in your work please let us know.</p>
 <ul>
-<li><a href="https://github.com/m2lines/CAM-ML">M2LInES CAM-ML</a> -
-  Using FTorch to couple a neural net parameterisation of convection to the CAM
-  atmospheric model in CESM.</li>
 <li><a href="https://github.com/DataWaveProject/CAM/">DataWave CAM-GW</a> -
   Using FTorch to couple neural net parameterisations of gravity waves to the CAM
   atmospheric model.</li>
 <li><a href="https://github.com/DataWaveProject/MiMA-machine-learning">MiMA Machine Learning</a> -
-  Using FTorch to couple a neural net parameterisation of gravity waves to the MiMA
-  atmospheric model.
+  Implementing a neural net parameterisation of gravity waves in the MiMA atmospheric model.
+  Demonstrates that nets trained near-identically offline can display greatly varied behaviours when coupled online.
   See Mansfield and Sheshadri (2024) - <a href="https://doi.org/10.1029/2024MS004292">DOI: 10.1029/2024MS004292</a></li>
 <li><a href="https://github.com/EyringMLClimateGroup/heuer23_ml_convection_parameterization">Convection parameterisations in ICON</a> -
-  Implementing machine learnt convection parameterisations in the ICON atmospheric model.
-  See Heuer et al (2023) - <a href="https://doi.org/10.48550/arXiv.2311.03251">DOI: 10.48550/arXiv.2311.03251</a></li>
+  Implementing machine-learnt convection parameterisations in the ICON atmospheric model
+  showing that best online performance occurs when causal relations are eliminated from the net.
+  See Heuer et al (2024) - <a href="https://doi.org/10.1029/2024MS004398">DOI: 10.1029/2024MS004398</a></li>
+<li>In the <a href="https://www.metoffice.gov.uk/research/climate/seasonal-to-decadal/gpc-outlooks/user-guide/global-seasonal-forecasting-system-glosea6">GloSea6 Seasonal Forecasting Model</a> -
+  Replacing a BiCGStab bottleneck in the code with a deep learning approach to speed up execution without compromising model accuracy.
+  See Park and Chung (2025) - <a href="https://doi.org/10.3390/atmos16010060">DOI: 10.3390/atmos16010060</a></li>
+<li>Emulation of cloud resolving models to reduce computational cost in E3SM.
+  See Hu et al. (2025) - <a href="https://doi.org/10.1029%2F2024MS004618">DOI: 10.1029/2024MS004618</a> (and <a href="https://github.com/zyhu-hu/E3SM_nvlab/tree/ftorch/climsim_scripts/perlmutter_scripts">code</a>)</li>
 </ul>
         </div>
           <div class="col-md-4">
@@ -150,7 +207,7 @@ If you use our library in your work please let us know.</p>
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Source Files</h3>
-              <ul><li><a href='sourcefile/ctorch.cpp.html'>ctorch.cpp</a></li><li><a href='sourcefile/ctorch.h.html'>ctorch.h</a></li><li><a href='sourcefile/ftorch.f90.html'>ftorch.f90</a></li><li><a href='sourcefile/pt2ts.py.html'>pt2ts.py</a></li></ul>
+              <ul><li><a href='sourcefile/ctorch.cpp.html'>ctorch.cpp</a></li><li><a href='sourcefile/ctorch.h.html'>ctorch.h</a></li><li><a href='sourcefile/ftorch.f90.html'>ftorch.F90</a></li><li><a href='sourcefile/ftorch_test_utils.f90.html'>ftorch_test_utils.f90</a></li><li><a href='sourcefile/pt2ts.py.html'>pt2ts.py</a></li></ul>
             </div>
             <div>
               <ul>
@@ -161,7 +218,7 @@ If you use our library in your work please let us know.</p>
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Modules</h3>
-              <ul><li><a href='module/ftorch.html'>ftorch</a></li></ul>
+              <ul><li><a href='module/ftorch.html'>ftorch</a></li><li><a href='module/ftorch_test_utils.html'>ftorch_test_utils</a></li></ul>
             </div>
             <div>
               <ul>
@@ -172,7 +229,7 @@ If you use our library in your work please let us know.</p>
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Procedures</h3>
-              <ul><li><a href='interface/torch_delete.html'>torch_delete</a></li><li><a href='interface/torch_from_blob_c.html'>torch_from_blob_c</a></li><li><a href='proc/torch_model_delete.html'>torch_model_delete</a></li><li><a href='proc/torch_model_forward.html'>torch_model_forward</a></li><li><a href='proc/torch_model_load.html'>torch_model_load</a></li><li><a href='proc/torch_tensor_array_delete.html'>torch_tensor_array_delete</a></li><li><a href='proc/torch_tensor_delete.html'>torch_tensor_delete</a></li><li><a href='interface/torch_tensor_from_array.html'>torch_tensor_from_array</a></li><li><a href='proc/torch_tensor_from_array_int16_1d.html'>torch_tensor_from_array_int16_1d</a></li><li><a href='proc/torch_tensor_from_array_int16_2d.html'>torch_tensor_from_array_int16_2d</a></li></ul>
+              <ul><li><a href='interface/assert_allclose.html'>assert_allclose</a></li><li><a href='proc/assert_allclose_real32_1d.html'>assert_allclose_real32_1d</a></li><li><a href='proc/assert_allclose_real32_2d.html'>assert_allclose_real32_2d</a></li><li><a href='proc/assert_allclose_real32_3d.html'>assert_allclose_real32_3d</a></li><li><a href='proc/assert_allclose_real64_1d.html'>assert_allclose_real64_1d</a></li><li><a href='proc/assert_allclose_real64_2d.html'>assert_allclose_real64_2d</a></li><li><a href='proc/assert_allclose_real64_3d.html'>assert_allclose_real64_3d</a></li><li><a href='interface/assert_isclose.html'>assert_isclose</a></li><li><a href='proc/assert_isclose_real32.html'>assert_isclose_real32</a></li><li><a href='proc/assert_isclose_real64.html'>assert_isclose_real64</a></li></ul>
             </div>
             <div>
               <ul>
@@ -200,7 +257,7 @@ If you use our library in your work please let us know.</p>
           <div class="col">
             <p>
               FTorch
- was developed by ICCS Cambridge<br>              &copy; 2024 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+ was developed by ICCS Cambridge<br>              &copy; 2025 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
 </p>
           </div>
           <div class="col">
@@ -213,27 +270,5 @@ If you use our library in your work please let us know.</p>
         <br>
       </div> <!-- /container -->
     </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
-
-    <!-- MathJax JavaScript
-             ================================================== -->
-             <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-          });
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-          <script src="./tipuesearch/tipuesearch_content.js"></script>
-          <script src="./tipuesearch/tipuesearch_set.js"></script>
-          <script src="./tipuesearch/tipuesearch.js"></script>
-
   </body>
 </html>

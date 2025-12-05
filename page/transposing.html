@@ -12,14 +12,29 @@
 
     <title>When to transpose data &ndash; FTorch</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="../css/pygments.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
     <link href="../css/local.css" rel="stylesheet">
-      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="../css/pygments.css" rel="stylesheet">
     <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
@@ -93,10 +108,17 @@
           <hr>
           <nav class="nav nav-pills flex-column">
               <a class="nav-link" href="LICENSE.html">FTorch License</a>
+              <a class="nav-link" href="archive.html">News archive</a>
+              <a class="nav-link" href="changelog.html">FTorch Changelog</a>
               <a class="nav-link" href="cmake.html">Installation and Build Process</a>
               <a class="nav-link" href="developer.html">Developer Guide</a>
               <a class="nav-link" href="examples.html">Examples</a>
               <a class="nav-link" href="gpu.html">GPU Support</a>
+              <a class="nav-link" href="hpc.html">Guidance for use in High Performance Computing (HPC)</a>
+              <a class="nav-link" href="offline.html">Offline training</a>
+              <a class="nav-link" href="online.html">Online training</a>
+              <a class="nav-link" href="presentations.html">Presentations</a>
+              <a class="nav-link" href="tensor.html">Tensor API</a>
               <a class="nav-link" href="testing.html">FTorch test suite</a>
               <a class="nav-link active disabled" href="transposing.html">When to transpose data</a>
               <a class="nav-link" href="troubleshooting.html">Troubleshooting</a>
@@ -106,7 +128,7 @@
       </div>
 
     <div class="col-9" id='text'>
-      <p>Transposition of data between Fortran and C can lead to a lot of unneccessary confusion.
+      <p>Transposition of data between Fortran and C can lead to a lot of unnecessary confusion.
 The FTorch library looks after this for you with the
 <a href="../interface/torch_tensor_from_array.html"><code>torch_tensor_from_array()</code></a> function which
 allows you to index a tensor in Torch in <strong>exactly the same way</strong> as you would in Fortran.</p>
@@ -187,21 +209,21 @@ matrix we had in Fortran; likely not what we were expecting!</p>
 <p>This means we need to be careful when passing data to make sure that what we read in
 to our Torch net is correct as we expect.</p>
 <h2 id="what-can-we-do">What can we do?</h2>
-<p>There are a few approaches we can take to address this.<br>
+<p>There are a few approaches we can take to address this.
 The first two of these are listed for conceptual purposes, whilst in practice we
-advise handling this using the <code>torch_tensor_from_array</code> function described in 
+advise handling this using the <code>torch_tensor_from_array</code> function described in
 <a href="#3-use-the-layout-argument-in-torch_tensor_from_array">3) below</a>.</p>
 <h4 id="1-transpose-before-passing">1) Transpose before passing</h4>
 <p>As seen from the above example, writing out from Fortran and reading directly in to
-Torch results in us recieving the transpose.</p>
-<p>Therefore we could transpose out Fortran data immediately before passing it to Torch.
+Torch results in us receiving the transpose.</p>
+<p>Therefore we could transpose our Fortran data immediately before passing it to Torch.
 As a result we will read in to Torch indexed the same as in Fortran pre-transposition.</p>
 <p>For arrays of dimension 2 this can be done using the intrinsic
 <a href="https://gcc.gnu.org/onlinedocs/gcc-12.1.0/gfortran/TRANSPOSE.html"><code>transpose()</code></a>
 function.</p>
 <p>For larger arrays we are required to use the
 <a href="https://gcc.gnu.org/onlinedocs/gfortran/RESHAPE.html">'reshape()'</a> intrinsic to swap
-the order of the indices.<br>
+the order of the indices.
 For example, if we had a 3x4x5 matrix <script type="math/tex">A</script> we would need to call</p>
 <div class="codehilite"><pre><span></span><code>A_to_torch = reshape(A, shape=[5, 4, 3], order=[3, 2, 1])
 </code></pre></div>
@@ -226,18 +248,22 @@ data in the same way in both Fortran and Torch.
 Not doing so could leave us open to introducing bugs.</p>
 <h4 id="3-use-the-layout-argument-in-torch_tensor_from_array">3) Use the <code>layout</code> argument in <code>torch_tensor_from_array</code></h4>
 <p>By far the easiest way to deal with the issue is not to worry about it at all!</p>
-<p>As described at the top of this page, by using the
+<p>As described at the top of this page, the
 <a href="../interface/torch_tensor_from_array.html">torch_tensor_from_array</a> function
-we can make use of the <code>layout</code> argument.
+provides functionality for handling this through its optional <code>layout</code> argument.
 This allows us to take data from Fortran and send it to Torch to be indexed in exactly
 the same way by using strided access based on the shape of the array.</p>
 <p>It takes the form of an array specifying which order to read the indices in.
 i.e. <code>[1, 2]</code> will read <code>i</code> then <code>j</code>.
 By passing <code>layout = [1, 2]</code> the data will be read into the correct indices by
-Torch.</p>
-<p>This is achieved by wrapping the <code>torch_tensor_from_blob</code> function to automatically
-generate strides assuming that a straightforward conversion between
-row- and column-major is what should happen.</p>
+Torch. The natural ordering <code>[1, 2, ..., n]</code> (where <code>n</code> is the dimension of the
+array) is the default used by <code>torch_tensor_from_array</code>.
+In cases where your tensors are indexed the same way in both Fortran and Torch, it
+should be sufficient to just use the default value, in which case you don't need
+to pass a <code>layout</code> argument at all.</p>
+<p>The strided access is achieved by wrapping the <code>torch_tensor_from_blob</code> function
+to automatically generate strides assuming that a straightforward conversion
+between row- and column-major is what should happen.</p>
 <p>i.e. if the Fortran array <code>A</code>
 <script type="math/tex; mode=display">
 \begin{pmatrix}
@@ -279,7 +305,7 @@ between Fortran and Torch see the more powerful but more complex
           <div class="col">
             <p>
               FTorch
- was developed by ICCS Cambridge<br>              &copy; 2024 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+ was developed by ICCS Cambridge<br>              &copy; 2025 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
 </p>
           </div>
           <div class="col">
@@ -292,27 +318,5 @@ between Fortran and Torch see the more powerful but more complex
         <br>
       </div> <!-- /container -->
     </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
-
-    <!-- MathJax JavaScript
-             ================================================== -->
-             <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-          });
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-          <script src="../tipuesearch/tipuesearch_content.js"></script>
-          <script src="../tipuesearch/tipuesearch_set.js"></script>
-          <script src="../tipuesearch/tipuesearch.js"></script>
-
   </body>
 </html>
